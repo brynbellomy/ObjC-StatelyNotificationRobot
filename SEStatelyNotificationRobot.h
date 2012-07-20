@@ -8,21 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
-// these are just for users' convenience -- feel free to ignore/extend/redefine
+// except for SEStateUndefined, these are just for users' convenience -- feel
+// free to ignore/extend/redefine.
 typedef enum {
-//  SEStateUnstarted = (1 << 1),
-//  SEStateInProgress = (1 << 2),
-//  SEStateFinished = (1 << 3),
-//  SEStateNotActive = (1 << 4),
+  SEStateUnstarted = (1 << 1),
+  SEStateInProgress = (1 << 2),
+  SEStateFinished = (1 << 3),
+  SEStateNotActive = (1 << 4),
   SEStateUndefined = INT_MAX
 } SEState;
 
 typedef void (^SEStateHandlerBlock)(SEState newState, NSDictionary *stateInfo);
 
+
+
 @interface SEStatelyNotificationRobot : NSObject
 
+/* class methods */
 + (SEStatelyNotificationRobot *) sharedRobot;
 
+
+/* instance methods */
++ (SEStatelyNotificationRobot *) sharedRobot;
 - (void) handleStateOf:(NSString *)stativeThingName handlerID:(NSString *)identifier onQueue:(NSOperationQueue *)queue withBlock:(SEStateHandlerBlock)block;
 - (void) removeHandlerWithID:(NSString *)handlerID;
 - (void) stopTrackingStateOf: (NSString *)stativeThingName;
@@ -35,3 +42,6 @@ typedef void (^SEStateHandlerBlock)(SEState newState, NSDictionary *stateInfo);
 
 
 @end
+
+
+
