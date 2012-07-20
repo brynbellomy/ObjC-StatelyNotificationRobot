@@ -8,21 +8,64 @@
 
 #import "SEStatelyNotificationRobot.h"
 
+static NSString *const SEStatelyNotificationKey_State = @"stativeThingState";
+static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateInfo";
+
+
+
+@interface SEStatelyNotificationHandler : NSObject
+  @property (nonatomic, strong, readwrite) NSString *handlerID;
+  @property (nonatomic, strong, readwrite) NSString *stativeThingName;
+  @property (nonatomic, strong, readwrite) id notificationHandle;
+@end
+
+@implementation SEStatelyNotificationHandler
+@synthesize handlerID = _handlerID;
+@synthesize stativeThingName = _stativeThingName;
+@synthesize notificationHandle = _notificationHandle;
+
+- (void) dealloc {
+  if (self.notificationHandle != nil)
+    [[NSNotificationCenter defaultCenter] removeObserver: self.notificationHandle];
+}
+@end
+
+
+@interface SEStativeThing : NSObject
+@property (nonatomic, strong, readwrite) NSString *name;
+@property (nonatomic, strong, readwrite) NSNumber *state;
+@property (nonatomic, strong, readwrite) NSDictionary *stateInfo;
+@end
+
+@implementation SEStativeThing
+@synthesize name = _name;
+@synthesize state = _state;
+@synthesize stateInfo = _stateInfo;
+@end
+
+
+
+
+
 @interface SEStatelyNotificationRobot ()
-  @property (nonatomic, strong, readwrite) NSMutableDictionary *notificationStates;
-  @property (nonatomic, strong, readwrite) NSMutableDictionary *identifiersToNSNotificationHandles;
+  @property (nonatomic, strong, readwrite) NSMutableDictionary *handlerIDsToHandlers;
+  @property (nonatomic, strong, readwrite) NSMutableDictionary *stativeThingNamesToStativeThings;
 @end
 
 
 
 @implementation SEStatelyNotificationRobot
 
-@synthesize notificationStates = _notificationStates;
-@synthesize identifiersToNSNotificationHandles = _identifiersToNSNotificationHandles;
+@synthesize handlerIDsToHandlers = _handlerIDsToHandlers;
+@synthesize stativeThingNamesToStativeThings = _stativeThingNamesToStativeThings;
 
 
 
-+ (SEStatelyNotificationRobot *) sharedInstance {
+
+#pragma mark- Class methods
+#pragma mark-
+
++ (SEStatelyNotificationRobot *) sharedRobot {
   static SEStatelyNotificationRobot *shared = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -33,102 +76,177 @@
 
 
 
+#pragma mark- Lifecycle
+#pragma mark-
+
 - (id) init {
   self = [super init];
   if (self) {
-    self.notificationStates = [NSMutableDictionary dictionary];
-    self.identifiersToNSNotificationHandles = [NSMutableDictionary dictionary];
+    self.handlerIDsToHandlers = [NSMutableDictionary dictionary];
+    self.stativeThingNamesToStativeThings = [NSMutableDictionary dictionary];
   }
   return self;
 }
 
 
 
-- (void) respondToState: (NSString *)notificationName
-         withIdentifier: (NSString *)identifier
-                onQueue: (NSOperationQueue *)queue
-              withBlock: (SEStatelyNotificationRobotBlock)block {
+#pragma mark- State tracking and changing
+#pragma mark-
+
+- (void) handleStateOf: (NSString *)stativeThingName
+             handlerID: (NSString *)handlerID
+               onQueue: (NSOperationQueue *)queue
+             withBlock: (SEStateHandlerBlock)block {
+
+  BrynFnLog(@"name: '%@'", stativeThingName);
+  BrynFnLog(@"handlerID: %@", handlerID);
   
   // add a regular block-based NSNotification observer
   
-  id handle = 
-    [[NSNotificationCenter defaultCenter] addObserverForName: notificationName 
+  id notificationHandle = 
+    [[NSNotificationCenter defaultCenter] addObserverForName: stativeThingName 
                                                       object: nil queue: queue
                                                   usingBlock: ^(NSNotification *note) {
-                                                      NSNumber *numState = [note.userInfo objectForKey: @"notificationState"];
-                                                      NSInteger state = numState.integerValue;
-                                                      block(state);
+                                                    
+                                                      NSNumber *numState = [note.userInfo objectForKey: SEStatelyNotificationKey_State];
+                                                      SEState state = (numState != nil ? numState.integerValue : SEStateUndefined);
+                                                      NSDictionary *stateInfo = [note.userInfo objectForKey: SEStatelyNotificationKey_StateInfo];
+                                                    
+                                                      block(state, stateInfo);
                                                   }];
   
   
-  // record the handle under the identifier so the caller doesn't have to mess with it
+  // record the handle and stativeThingName under the handlerID so the caller
+  // doesn't have to worry about storing the handle or doing anything complicated
+  // when removing the handler
   
-  [self.identifiersToNSNotificationHandles setObject:handle forKey:identifier];
+  SEStatelyNotificationHandler *handler = [[SEStatelyNotificationHandler alloc] init];
+  handler.handlerID = handlerID;
+  handler.stativeThingName = stativeThingName;
+  handler.notificationHandle = notificationHandle;
   
+  [self.handlerIDsToHandlers setObject:handler forKey:handlerID];
+  
+  
+  // add a SEStativeThing object for this stativeThingName if it doesn't already exist
+  
+  if ([self.stativeThingNamesToStativeThings objectForKey:stativeThingName] == nil) {
+    NSLog(@"Creating new SEStativeThing '%@'", stativeThingName);
+    SEStativeThing *newStativeThing = [[SEStativeThing alloc] init];
+    newStativeThing.name = stativeThingName;
+    newStativeThing.state = [NSNumber numberWithInteger:SEStateUndefined];
+    newStativeThing.stateInfo = [NSDictionary dictionary];
+    [self.stativeThingNamesToStativeThings setObject:newStativeThing forKey:stativeThingName];
+  }
   
   // call the state handler block for the newly-registered observer immediately so it can sync with the current state
   
   __weak SEStatelyNotificationRobot *weakSelf = self;
   [queue addOperationWithBlock: ^{
       __strong SEStatelyNotificationRobot *strongSelf = weakSelf;
-      NSNumber *numState = [strongSelf.notificationStates objectForKey:notificationName];
-      NSInteger state = numState.integerValue;
-      block(state);
+      SEStativeThing *stativeThing = [strongSelf.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+      SEState state = (stativeThing.state != nil ? stativeThing.state.integerValue : SEStateUndefined);
+      block(state, stativeThing.stateInfo);
   }];
 }
 
 
 
-- (void) removeObserverWithIdentifier:(NSString *)identifier {
-  
-  // remove the observer we added to the default NSNotificationCenter
-  
-  id handle = [self.identifiersToNSNotificationHandles objectForKey:identifier];
-  if (handle != nil)
-    [[NSNotificationCenter defaultCenter] removeObserver:handle];
-  
-  
-  // remove the handle from the identifiers-to-handles dictionary
-  
-  [self.identifiersToNSNotificationHandles removeObjectForKey:identifier];
+- (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState {
+  [self changeStateOf:stativeThingName to:newState stateInfo:nil];
 }
 
 
 
-- (NSDictionary *)makeUserInfoDictionaryForNotification:(NSString *)notificationName {
-  NSNumber *notificationState = [self.notificationStates objectForKey:notificationName];
-  return [NSDictionary dictionaryWithObject:notificationState forKey:@"notificationState"];
-}
+- (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState stateInfo:(NSDictionary *)stateInfo {
+  NSAssert(stativeThingName != nil, @"stativeThingName == nil");
 
+  BrynFnLog(@"name: '%@'", stativeThingName);
+  BrynFnLog(@"newState: %d", newState);
+  BrynFnLog(@"stateInfo: %@", stateInfo);
+  
+  // update the SEStativeThing object we have on file
+  SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+  
+  if (stativeThing == nil) {
+    BrynFnLog(@"Creating new SEStativeThing '%@'", stativeThingName);
+    stativeThing = [[SEStativeThing alloc] init];
+    stativeThing.name = stativeThingName;
+    
+    [self.stativeThingNamesToStativeThings setObject:stativeThing forKey:stativeThingName];
+  }
+  
+  if (stateInfo == nil) {
+    stateInfo = [NSDictionary dictionary];
+  }
+  
+  stativeThing.state = [NSNumber numberWithInteger:newState];
+  stativeThing.stateInfo = stateInfo;
+  
+    
 
-
-- (void) postNotificationToAllRegisteredBlocks:(NSString *)notificationName {
-  [[NSNotificationCenter defaultCenter] postNotificationName: notificationName
+  // trigger all of our handlers' blocks that we've registered with [NSNotificationCenter defaultCenter]
+  id keys[2], objects[2];
+  keys[0] = SEStatelyNotificationKey_State;     objects[0] = stativeThing.state;
+  keys[1] = SEStatelyNotificationKey_StateInfo; objects[1] = stativeThing.stateInfo;
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName: stativeThing.name
                                                       object: nil
-                                                    userInfo: [self makeUserInfoDictionaryForNotification:notificationName]];
+                                                    userInfo: [NSDictionary dictionaryWithObjects:objects forKeys:keys count:2]];
 }
 
 
 
-- (void) postNotificationWithoutSettingState:(NSString *)notificationName {
-  [self postNotificationToAllRegisteredBlocks:notificationName];
+#pragma mark- Stop tracking state
+#pragma mark-
+
+- (void) removeHandlerWithID:(NSString *)handlerID {
+  
+  // remove the handler from the identifiers-to-handles dictionary.  when the
+  // handler deallocs, it will remove its observer from the default NSNotificationCenter.
+  
+  [self.handlerIDsToHandlers removeObjectForKey:handlerID];
 }
 
 
 
-- (void) postNotification:(NSString *)notificationName withState:(NSInteger)notificationState {
+- (void) stopTrackingStateOf: (NSString *)stativeThingName {
+  if (stativeThingName == nil)
+    return;
   
-  // set the new notification state
-  
-  NSNumber *numNotificationState = [NSNumber numberWithInteger:notificationState];
-  [self.notificationStates setObject:numNotificationState forKey:notificationName];
+  [self.stativeThingNamesToStativeThings removeObjectForKey: stativeThingName];
   
   
-  // trigger all observer blocks
+  NSMutableArray *handlerIDsToRemove = [NSMutableArray array];
+  for (NSString *handlerID in self.handlerIDsToHandlers) {
+    SEStatelyNotificationHandler *handler = [self.handlerIDsToHandlers objectForKey:handlerID];
+    
+    if ([stativeThingName compare:handler.stativeThingName] == NSOrderedSame) {
+      [handlerIDsToRemove addObject:handlerID];
+    }
+  }
   
-  [self postNotificationToAllRegisteredBlocks:notificationName];
+  // this should dealloc all of the handler objects, which will cause each of those
+  // objects to unregister with [NSNotificationCenter defaultCenter]
+  [self.handlerIDsToHandlers removeObjectsForKeys:handlerIDsToRemove];
 }
 
+
+
+#pragma mark- Public accessors for SEStativeThing objects
+#pragma mark-
+
+- (SEState) stateOf:(NSString *)stativeThingName {
+  SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+  return stativeThing.state.integerValue;
+}
+
+
+
+- (NSDictionary *) stateInfoForStateOf:(NSString *)stativeThingName {
+  SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+  return stativeThing.stateInfo;
+}
 
 
 

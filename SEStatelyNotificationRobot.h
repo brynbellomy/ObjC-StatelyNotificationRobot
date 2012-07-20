@@ -8,15 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^SEStatelyNotificationRobotBlock)(NSInteger notificationState);
+// these are just for users' convenience -- feel free to ignore/extend/redefine
+typedef enum {
+//  SEStateUnstarted = (1 << 1),
+//  SEStateInProgress = (1 << 2),
+//  SEStateFinished = (1 << 3),
+//  SEStateNotActive = (1 << 4),
+  SEStateUndefined = INT_MAX
+} SEState;
+
+typedef void (^SEStateHandlerBlock)(SEState newState, NSDictionary *stateInfo);
 
 @interface SEStatelyNotificationRobot : NSObject
 
-+ (SEStatelyNotificationRobot *) sharedInstance;
++ (SEStatelyNotificationRobot *) sharedRobot;
 
-- (void) respondToState:(NSString *)notificationName withIdentifier:(NSString *)identifier onQueue:(NSOperationQueue *)queue withBlock:(SEStatelyNotificationRobotBlock)block;
-- (void) removeObserverWithIdentifier: (NSString *)identifier;
-- (void) postNotificationWithoutSettingState: (NSString *)notificationName;
-- (void) postNotification: (NSString *)notificationName withState: (NSInteger)notificationState;
+- (void) handleStateOf:(NSString *)stativeThingName handlerID:(NSString *)identifier onQueue:(NSOperationQueue *)queue withBlock:(SEStateHandlerBlock)block;
+- (void) removeHandlerWithID:(NSString *)handlerID;
+- (void) stopTrackingStateOf: (NSString *)stativeThingName;
+
+- (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState;
+- (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState stateInfo:(NSDictionary *)stateInfo;
+
+- (SEState) stateOf:(NSString *)stativeThingName;
+- (NSDictionary *) stateInfoForStateOf:(NSString *)stativeThingName;
+
 
 @end
