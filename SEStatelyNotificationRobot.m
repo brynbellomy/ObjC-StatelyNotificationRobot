@@ -7,59 +7,38 @@
 //
 
 #import "SEStatelyNotificationRobot.h"
+#import "SEStatelyNotificationHandler.h"
+#import "SEStativeThing.h"
+
 
 static NSString *const SEStatelyNotificationKey_State = @"stativeThingState";
 static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateInfo";
 
 
 
-@interface SEStatelyNotificationHandler : NSObject
-  @property (nonatomic, strong, readwrite) NSString *handlerID;
-  @property (nonatomic, strong, readwrite) NSString *stativeThingName;
-  @property (nonatomic, strong, readwrite) id notificationHandle;
-@end
-
-@implementation SEStatelyNotificationHandler
-@synthesize handlerID = _handlerID;
-@synthesize stativeThingName = _stativeThingName;
-@synthesize notificationHandle = _notificationHandle;
-
-- (void) dealloc {
-  if (self.notificationHandle != nil)
-    [[NSNotificationCenter defaultCenter] removeObserver: self.notificationHandle];
-}
-@end
-
-
-@interface SEStativeThing : NSObject
-@property (nonatomic, strong, readwrite) NSString *name;
-@property (nonatomic, strong, readwrite) NSNumber *state;
-@property (nonatomic, strong, readwrite) NSDictionary *stateInfo;
-@end
-
-@implementation SEStativeThing
-@synthesize name = _name;
-@synthesize state = _state;
-@synthesize stateInfo = _stateInfo;
-@end
-
-
-
-
+/**
+ * private interface
+ */
 
 @interface SEStatelyNotificationRobot ()
-  @property (nonatomic, strong, readwrite) NSMutableDictionary *handlerIDsToHandlers;
-  @property (nonatomic, strong, readwrite) NSMutableDictionary *stativeThingNamesToStativeThings;
+
+@property (nonatomic, strong, readwrite) NSMutableDictionary *handlerIDsToHandlers;
+@property (nonatomic, strong, readwrite) NSMutableDictionary *stativeThingNamesToStativeThings;
+
 @end
 
 
+
+
+
+/**
+ * implementation
+ */
 
 @implementation SEStatelyNotificationRobot
 
 @synthesize handlerIDsToHandlers = _handlerIDsToHandlers;
 @synthesize stativeThingNamesToStativeThings = _stativeThingNamesToStativeThings;
-
-
 
 
 #pragma mark- Class methods
@@ -98,9 +77,6 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateI
                onQueue: (NSOperationQueue *)queue
              withBlock: (SEStateHandlerBlock)block {
 
-  BrynFnLog(@"name: '%@'", stativeThingName);
-  BrynFnLog(@"handlerID: %@", handlerID);
-  
   // add a regular block-based NSNotification observer
   
   id notificationHandle = 
@@ -131,7 +107,6 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateI
   // add a SEStativeThing object for this stativeThingName if it doesn't already exist
   
   if ([self.stativeThingNamesToStativeThings objectForKey:stativeThingName] == nil) {
-    NSLog(@"Creating new SEStativeThing '%@'", stativeThingName);
     SEStativeThing *newStativeThing = [[SEStativeThing alloc] init];
     newStativeThing.name = stativeThingName;
     newStativeThing.state = [NSNumber numberWithInteger:SEStateUndefined];
@@ -161,15 +136,10 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateI
 - (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState stateInfo:(NSDictionary *)stateInfo {
   NSAssert(stativeThingName != nil, @"stativeThingName == nil");
 
-  BrynFnLog(@"name: '%@'", stativeThingName);
-  BrynFnLog(@"newState: %d", newState);
-  BrynFnLog(@"stateInfo: %@", stateInfo);
-  
   // update the SEStativeThing object we have on file
   SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
   
   if (stativeThing == nil) {
-    BrynFnLog(@"Creating new SEStativeThing '%@'", stativeThingName);
     stativeThing = [[SEStativeThing alloc] init];
     stativeThing.name = stativeThingName;
     
