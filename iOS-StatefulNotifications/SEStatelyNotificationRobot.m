@@ -11,8 +11,8 @@
 #import "SEStativeThing.h"
 
 
-static NSString *const SEStatelyNotificationKey_State = @"stativeThingState";
-static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateInfo";
+static NSString *const SEStatelyNotificationKey_State = @"SEStatelyNotificationKey_State";
+static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificationKey_StateInfo";
 
 
 
@@ -156,6 +156,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateI
     
 
   // trigger all of our handlers' blocks that we've registered with [NSNotificationCenter defaultCenter]
+  
   id keys[2], objects[2];
   keys[0] = SEStatelyNotificationKey_State;     objects[0] = stativeThing.state;
   keys[1] = SEStatelyNotificationKey_StateInfo; objects[1] = stativeThing.stateInfo;
@@ -191,14 +192,22 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateI
   for (NSString *handlerID in self.handlerIDsToHandlers) {
     SEStatelyNotificationHandler *handler = [self.handlerIDsToHandlers objectForKey:handlerID];
     
-    if ([stativeThingName compare:handler.stativeThingName] == NSOrderedSame) {
+    if ([stativeThingName isEqualToString:handler.stativeThingName]) {
       [handlerIDsToRemove addObject:handlerID];
     }
   }
   
   // this should dealloc all of the handler objects, which will cause each of those
   // objects to unregister with [NSNotificationCenter defaultCenter]
+  
   [self.handlerIDsToHandlers removeObjectsForKeys:handlerIDsToRemove];
+}
+
+
+
+- (void) stopTrackingAllStates {
+  [self.stativeThingNamesToStativeThings removeAllObjects];
+  [self.handlerIDsToHandlers removeAllObjects];
 }
 
 
@@ -208,7 +217,10 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"stativeThingStateI
 
 - (SEState) stateOf:(NSString *)stativeThingName {
   SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
-  return stativeThing.state.integerValue;
+  if (stativeThing == nil)
+    return SEStateUndefined;
+  else
+    return stativeThing.state.integerValue;
 }
 
 
