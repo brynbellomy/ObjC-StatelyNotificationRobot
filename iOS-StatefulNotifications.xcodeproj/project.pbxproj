@@ -9,12 +9,11 @@
 /* Begin PBXBuildFile section */
 		C508B41915BA3AA100175FE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B41815BA3AA100175FE4 /* Foundation.framework */; };
 		C508B42715BA3AA100175FE4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B42615BA3AA100175FE4 /* SenTestingKit.framework */; };
-		C508B42915BA3AA100175FE4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B42815BA3AA100175FE4 /* UIKit.framework */; };
 		C508B42A15BA3AA100175FE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B41815BA3AA100175FE4 /* Foundation.framework */; };
 		C508B43315BA3AA100175FE4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C508B43115BA3AA100175FE4 /* InfoPlist.strings */; };
 		C508B44515BA3AF300175FE4 /* SEStatelyNotificationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B43F15BA3AF300175FE4 /* SEStatelyNotificationHandler.h */; };
 		C508B44615BA3AF300175FE4 /* SEStatelyNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44015BA3AF300175FE4 /* SEStatelyNotificationHandler.m */; };
-		C508B44815BA3AF300175FE4 /* SEStatelyNotificationRobot.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B44115BA3AF300175FE4 /* SEStatelyNotificationRobot.h */; };
+		C508B44815BA3AF300175FE4 /* SEStatelyNotificationRobot.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B44115BA3AF300175FE4 /* SEStatelyNotificationRobot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C508B44915BA3AF300175FE4 /* SEStatelyNotificationRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44215BA3AF300175FE4 /* SEStatelyNotificationRobot.m */; };
 		C508B44B15BA3AF300175FE4 /* SEStativeThing.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B44315BA3AF300175FE4 /* SEStativeThing.h */; };
 		C508B44C15BA3AF300175FE4 /* SEStativeThing.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44415BA3AF300175FE4 /* SEStativeThing.m */; };
@@ -69,13 +68,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A4DC9337FDFB4977A3E8CE8C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C508B41515BA3AA100175FE4 /* libiOS-StatefulNotifications.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libiOS-StatefulNotifications.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C508B41815BA3AA100175FE4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C508B41C15BA3AA100175FE4 /* iOS-StatefulNotifications-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS-StatefulNotifications-Prefix.pch"; sourceTree = "<group>"; };
 		C508B42515BA3AA100175FE4 /* iOS-StatefulNotificationsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-StatefulNotificationsTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C508B42615BA3AA100175FE4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		C508B42815BA3AA100175FE4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		C508B43015BA3AA100175FE4 /* iOS-StatefulNotificationsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS-StatefulNotificationsTests-Info.plist"; sourceTree = "<group>"; };
 		C508B43215BA3AA100175FE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C508B43F15BA3AF300175FE4 /* SEStatelyNotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEStatelyNotificationHandler.h; sourceTree = "<group>"; };
@@ -103,7 +100,6 @@
 			files = (
 				C508B42715BA3AA100175FE4 /* SenTestingKit.framework in Frameworks */,
 				C5B4118915BB3498005B642E /* libiOS-StatefulNotifications.a in Frameworks */,
-				C508B42915BA3AA100175FE4 /* UIKit.framework in Frameworks */,
 				C508B42A15BA3AA100175FE4 /* Foundation.framework in Frameworks */,
 				C5B411A715BB35C8005B642E /* libKiwi.a in Frameworks */,
 			);
@@ -137,8 +133,6 @@
 			children = (
 				C508B41815BA3AA100175FE4 /* Foundation.framework */,
 				C508B42615BA3AA100175FE4 /* SenTestingKit.framework */,
-				C508B42815BA3AA100175FE4 /* UIKit.framework */,
-				A4DC9337FDFB4977A3E8CE8C /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,8 +195,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C508B44515BA3AF300175FE4 /* SEStatelyNotificationHandler.h in Headers */,
 				C508B44815BA3AF300175FE4 /* SEStatelyNotificationRobot.h in Headers */,
+				C508B44515BA3AF300175FE4 /* SEStatelyNotificationHandler.h in Headers */,
 				C508B44B15BA3AF300175FE4 /* SEStativeThing.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,9 +415,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -440,9 +436,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -454,10 +452,8 @@
 				DSTROOT = /tmp/iOS_StatefulNotifications.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -467,10 +463,8 @@
 				DSTROOT = /tmp/iOS_StatefulNotifications.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
