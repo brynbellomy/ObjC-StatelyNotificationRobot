@@ -1,0 +1,552 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C508B41915BA3AA100175FE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B41815BA3AA100175FE4 /* Foundation.framework */; };
+		C508B42715BA3AA100175FE4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B42615BA3AA100175FE4 /* SenTestingKit.framework */; };
+		C508B42915BA3AA100175FE4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B42815BA3AA100175FE4 /* UIKit.framework */; };
+		C508B42A15BA3AA100175FE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B41815BA3AA100175FE4 /* Foundation.framework */; };
+		C508B43315BA3AA100175FE4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C508B43115BA3AA100175FE4 /* InfoPlist.strings */; };
+		C508B44515BA3AF300175FE4 /* SEStatelyNotificationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B43F15BA3AF300175FE4 /* SEStatelyNotificationHandler.h */; };
+		C508B44615BA3AF300175FE4 /* SEStatelyNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44015BA3AF300175FE4 /* SEStatelyNotificationHandler.m */; };
+		C508B44815BA3AF300175FE4 /* SEStatelyNotificationRobot.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B44115BA3AF300175FE4 /* SEStatelyNotificationRobot.h */; };
+		C508B44915BA3AF300175FE4 /* SEStatelyNotificationRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44215BA3AF300175FE4 /* SEStatelyNotificationRobot.m */; };
+		C508B44B15BA3AF300175FE4 /* SEStativeThing.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B44315BA3AF300175FE4 /* SEStativeThing.h */; };
+		C508B44C15BA3AF300175FE4 /* SEStativeThing.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44415BA3AF300175FE4 /* SEStativeThing.m */; };
+		C508B46215BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B46115BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m */; };
+		C5B4118915BB3498005B642E /* libiOS-StatefulNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B41515BA3AA100175FE4 /* libiOS-StatefulNotifications.a */; };
+		C5B411A715BB35C8005B642E /* libKiwi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5B411A015BB3592005B642E /* libKiwi.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C508B42B15BA3AA100175FE4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C508B40C15BA3AA100175FE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C508B41415BA3AA100175FE4;
+			remoteInfo = "iOS-StatefulNotifications";
+		};
+		C5B4119F15BB3592005B642E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5B4119415BB3591005B642E /* Kiwi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F5015B9F11583A77002E9A98;
+			remoteInfo = Kiwi;
+		};
+		C5B411A115BB3592005B642E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5B4119415BB3591005B642E /* Kiwi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 832C83C7157263B300F160D5;
+			remoteInfo = "Kiwi-OSX";
+		};
+		C5B411A315BB3592005B642E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5B4119415BB3591005B642E /* Kiwi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F5015C9E11584017002E9A98;
+			remoteInfo = KiwiTests;
+		};
+		C5B411A515BB3592005B642E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5B4119415BB3591005B642E /* Kiwi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A3B16542139967B800E9CC6E;
+			remoteInfo = KiwiExamples;
+		};
+		C5B411A815BB35E0005B642E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5B4119415BB3591005B642E /* Kiwi.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F5015B9E11583A77002E9A98;
+			remoteInfo = Kiwi;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A4DC9337FDFB4977A3E8CE8C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C508B41515BA3AA100175FE4 /* libiOS-StatefulNotifications.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libiOS-StatefulNotifications.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C508B41815BA3AA100175FE4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C508B41C15BA3AA100175FE4 /* iOS-StatefulNotifications-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS-StatefulNotifications-Prefix.pch"; sourceTree = "<group>"; };
+		C508B42515BA3AA100175FE4 /* iOS-StatefulNotificationsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-StatefulNotificationsTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C508B42615BA3AA100175FE4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		C508B42815BA3AA100175FE4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		C508B43015BA3AA100175FE4 /* iOS-StatefulNotificationsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS-StatefulNotificationsTests-Info.plist"; sourceTree = "<group>"; };
+		C508B43215BA3AA100175FE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C508B43F15BA3AF300175FE4 /* SEStatelyNotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEStatelyNotificationHandler.h; sourceTree = "<group>"; };
+		C508B44015BA3AF300175FE4 /* SEStatelyNotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEStatelyNotificationHandler.m; sourceTree = "<group>"; };
+		C508B44115BA3AF300175FE4 /* SEStatelyNotificationRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEStatelyNotificationRobot.h; sourceTree = "<group>"; };
+		C508B44215BA3AF300175FE4 /* SEStatelyNotificationRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEStatelyNotificationRobot.m; sourceTree = "<group>"; };
+		C508B44315BA3AF300175FE4 /* SEStativeThing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEStativeThing.h; sourceTree = "<group>"; };
+		C508B44415BA3AF300175FE4 /* SEStativeThing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEStativeThing.m; sourceTree = "<group>"; };
+		C508B46115BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEStatelyNotificationRobotSpec.m; sourceTree = "<group>"; };
+		C5B4119415BB3591005B642E /* Kiwi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kiwi.xcodeproj; path = Vendor/Kiwi/Kiwi.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C508B41215BA3AA100175FE4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C508B41915BA3AA100175FE4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C508B42115BA3AA100175FE4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C508B42715BA3AA100175FE4 /* SenTestingKit.framework in Frameworks */,
+				C5B4118915BB3498005B642E /* libiOS-StatefulNotifications.a in Frameworks */,
+				C508B42915BA3AA100175FE4 /* UIKit.framework in Frameworks */,
+				C508B42A15BA3AA100175FE4 /* Foundation.framework in Frameworks */,
+				C5B411A715BB35C8005B642E /* libKiwi.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C508B40A15BA3AA100175FE4 = {
+			isa = PBXGroup;
+			children = (
+				C5B4119415BB3591005B642E /* Kiwi.xcodeproj */,
+				C508B41A15BA3AA100175FE4 /* iOS-StatefulNotifications */,
+				C508B42E15BA3AA100175FE4 /* iOS-StatefulNotificationsTests */,
+				C508B41715BA3AA100175FE4 /* Frameworks */,
+				C508B41615BA3AA100175FE4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C508B41615BA3AA100175FE4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C508B41515BA3AA100175FE4 /* libiOS-StatefulNotifications.a */,
+				C508B42515BA3AA100175FE4 /* iOS-StatefulNotificationsTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C508B41715BA3AA100175FE4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C508B41815BA3AA100175FE4 /* Foundation.framework */,
+				C508B42615BA3AA100175FE4 /* SenTestingKit.framework */,
+				C508B42815BA3AA100175FE4 /* UIKit.framework */,
+				A4DC9337FDFB4977A3E8CE8C /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C508B41A15BA3AA100175FE4 /* iOS-StatefulNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				C508B43F15BA3AF300175FE4 /* SEStatelyNotificationHandler.h */,
+				C508B44015BA3AF300175FE4 /* SEStatelyNotificationHandler.m */,
+				C508B44115BA3AF300175FE4 /* SEStatelyNotificationRobot.h */,
+				C508B44215BA3AF300175FE4 /* SEStatelyNotificationRobot.m */,
+				C508B44315BA3AF300175FE4 /* SEStativeThing.h */,
+				C508B44415BA3AF300175FE4 /* SEStativeThing.m */,
+				C508B41B15BA3AA100175FE4 /* Supporting Files */,
+			);
+			path = "iOS-StatefulNotifications";
+			sourceTree = "<group>";
+		};
+		C508B41B15BA3AA100175FE4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C508B41C15BA3AA100175FE4 /* iOS-StatefulNotifications-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C508B42E15BA3AA100175FE4 /* iOS-StatefulNotificationsTests */ = {
+			isa = PBXGroup;
+			children = (
+				C508B46115BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m */,
+				C508B42F15BA3AA100175FE4 /* Supporting Files */,
+			);
+			path = "iOS-StatefulNotificationsTests";
+			sourceTree = "<group>";
+		};
+		C508B42F15BA3AA100175FE4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C508B43015BA3AA100175FE4 /* iOS-StatefulNotificationsTests-Info.plist */,
+				C508B43115BA3AA100175FE4 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C5B4119515BB3591005B642E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C5B411A015BB3592005B642E /* libKiwi.a */,
+				C5B411A215BB3592005B642E /* libKiwi-OSX.a */,
+				C5B411A415BB3592005B642E /* KiwiTests.octest */,
+				C5B411A615BB3592005B642E /* KiwiExamples.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C508B41315BA3AA100175FE4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C508B44515BA3AF300175FE4 /* SEStatelyNotificationHandler.h in Headers */,
+				C508B44815BA3AF300175FE4 /* SEStatelyNotificationRobot.h in Headers */,
+				C508B44B15BA3AF300175FE4 /* SEStativeThing.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C508B41415BA3AA100175FE4 /* iOS-StatefulNotifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C508B43915BA3AA100175FE4 /* Build configuration list for PBXNativeTarget "iOS-StatefulNotifications" */;
+			buildPhases = (
+				C508B41115BA3AA100175FE4 /* Sources */,
+				C508B41215BA3AA100175FE4 /* Frameworks */,
+				C508B41315BA3AA100175FE4 /* Headers */,
+				F08B38D629B24C8D9F88057D /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iOS-StatefulNotifications";
+			productName = "iOS-StatefulNotifications";
+			productReference = C508B41515BA3AA100175FE4 /* libiOS-StatefulNotifications.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		C508B42415BA3AA100175FE4 /* iOS-StatefulNotificationsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C508B43C15BA3AA100175FE4 /* Build configuration list for PBXNativeTarget "iOS-StatefulNotificationsTests" */;
+			buildPhases = (
+				C508B42015BA3AA100175FE4 /* Sources */,
+				C508B42115BA3AA100175FE4 /* Frameworks */,
+				C508B42215BA3AA100175FE4 /* Resources */,
+				C508B42315BA3AA100175FE4 /* ShellScript */,
+				F08B38D629B24C8D9F88057D /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C5B411A915BB35E0005B642E /* PBXTargetDependency */,
+				C508B42C15BA3AA100175FE4 /* PBXTargetDependency */,
+			);
+			name = "iOS-StatefulNotificationsTests";
+			productName = "iOS-StatefulNotificationsTests";
+			productReference = C508B42515BA3AA100175FE4 /* iOS-StatefulNotificationsTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C508B40C15BA3AA100175FE4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = illumntr;
+			};
+			buildConfigurationList = C508B40F15BA3AA100175FE4 /* Build configuration list for PBXProject "iOS-StatefulNotifications" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C508B40A15BA3AA100175FE4;
+			productRefGroup = C508B41615BA3AA100175FE4 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C5B4119515BB3591005B642E /* Products */;
+					ProjectRef = C5B4119415BB3591005B642E /* Kiwi.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C508B41415BA3AA100175FE4 /* iOS-StatefulNotifications */,
+				C508B42415BA3AA100175FE4 /* iOS-StatefulNotificationsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C5B411A015BB3592005B642E /* libKiwi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKiwi.a;
+			remoteRef = C5B4119F15BB3592005B642E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5B411A215BB3592005B642E /* libKiwi-OSX.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libKiwi-OSX.a";
+			remoteRef = C5B411A115BB3592005B642E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5B411A415BB3592005B642E /* KiwiTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KiwiTests.octest;
+			remoteRef = C5B411A315BB3592005B642E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5B411A615BB3592005B642E /* KiwiExamples.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KiwiExamples.octest;
+			remoteRef = C5B411A515BB3592005B642E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C508B42215BA3AA100175FE4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C508B43315BA3AA100175FE4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C508B42315BA3AA100175FE4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		F08B38D629B24C8D9F88057D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C508B41115BA3AA100175FE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C508B44615BA3AF300175FE4 /* SEStatelyNotificationHandler.m in Sources */,
+				C508B44915BA3AF300175FE4 /* SEStatelyNotificationRobot.m in Sources */,
+				C508B44C15BA3AF300175FE4 /* SEStativeThing.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C508B42015BA3AA100175FE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C508B46215BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C508B42C15BA3AA100175FE4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C508B41415BA3AA100175FE4 /* iOS-StatefulNotifications */;
+			targetProxy = C508B42B15BA3AA100175FE4 /* PBXContainerItemProxy */;
+		};
+		C5B411A915BB35E0005B642E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Kiwi;
+			targetProxy = C5B411A815BB35E0005B642E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C508B43115BA3AA100175FE4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C508B43215BA3AA100175FE4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C508B43715BA3AA100175FE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C508B43815BA3AA100175FE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C508B43A15BA3AA100175FE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/iOS_StatefulNotifications.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C508B43B15BA3AA100175FE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/iOS_StatefulNotifications.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C508B43D15BA3AA100175FE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/xcodeproj.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "iOS-StatefulNotificationsTests/iOS-StatefulNotificationsTests-Info.plist";
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = Vendor/Kiwi/Kiwi;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		C508B43E15BA3AA100175FE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/xcodeproj.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "iOS-StatefulNotificationsTests/iOS-StatefulNotificationsTests-Info.plist";
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = Vendor/Kiwi/Kiwi;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C508B40F15BA3AA100175FE4 /* Build configuration list for PBXProject "iOS-StatefulNotifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C508B43715BA3AA100175FE4 /* Debug */,
+				C508B43815BA3AA100175FE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C508B43915BA3AA100175FE4 /* Build configuration list for PBXNativeTarget "iOS-StatefulNotifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C508B43A15BA3AA100175FE4 /* Debug */,
+				C508B43B15BA3AA100175FE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C508B43C15BA3AA100175FE4 /* Build configuration list for PBXNativeTarget "iOS-StatefulNotificationsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C508B43D15BA3AA100175FE4 /* Debug */,
+				C508B43E15BA3AA100175FE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C508B40C15BA3AA100175FE4 /* Project object */;
+}

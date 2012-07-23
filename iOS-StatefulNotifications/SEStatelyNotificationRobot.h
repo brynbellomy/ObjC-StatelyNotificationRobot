@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 // except for SEStateUndefined, these are just for users' convenience -- feel
 // free to ignore/extend/redefine.
 typedef enum {
@@ -29,11 +30,11 @@ typedef void (^SEStateHandlerBlock)(SEState newState, NSDictionary *stateInfo);
 
 
 /* instance methods */
-+ (SEStatelyNotificationRobot *) sharedRobot;
 - (void) handleStateOf:(NSString *)stativeThingName handlerID:(NSString *)identifier onQueue:(NSOperationQueue *)queue withBlock:(SEStateHandlerBlock)block;
 - (void) removeHandlerWithID:(NSString *)handlerID;
 - (void) stopTrackingStateOf: (NSString *)stativeThingName;
-
+- (void) stopTrackingAllStates;
+  
 - (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState;
 - (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState stateInfo:(NSDictionary *)stateInfo;
 
