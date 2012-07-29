@@ -18,20 +18,15 @@
 		C508B44B15BA3AF300175FE4 /* SEStativeThing.h in Headers */ = {isa = PBXBuildFile; fileRef = C508B44315BA3AF300175FE4 /* SEStativeThing.h */; };
 		C508B44C15BA3AF300175FE4 /* SEStativeThing.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44415BA3AF300175FE4 /* SEStativeThing.m */; };
 		C508B46215BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B46115BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m */; };
-		C5B4118915BB3498005B642E /* libiOS-StatefulNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C508B41515BA3AA100175FE4 /* libiOS-StatefulNotifications.a */; };
 		C5B411A715BB35C8005B642E /* libKiwi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5B411A015BB3592005B642E /* libKiwi.a */; };
 		C5C860CE15C51D6A00D3471C /* Bryn.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C860CB15C51D6A00D3471C /* Bryn.h */; };
 		C5C860CF15C51D6A00D3471C /* Bryn.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C860CC15C51D6A00D3471C /* Bryn.m */; };
+		C5C8611A15C536A500D3471C /* SEStatelyNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44015BA3AF300175FE4 /* SEStatelyNotificationHandler.m */; };
+		C5C8611B15C536A500D3471C /* SEStatelyNotificationRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44215BA3AF300175FE4 /* SEStatelyNotificationRobot.m */; };
+		C5C8611C15C536A500D3471C /* SEStativeThing.m in Sources */ = {isa = PBXBuildFile; fileRef = C508B44415BA3AF300175FE4 /* SEStativeThing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C508B42B15BA3AA100175FE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C508B40C15BA3AA100175FE4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C508B41415BA3AA100175FE4;
-			remoteInfo = "iOS-StatefulNotifications";
-		};
 		C5B4119F15BB3592005B642E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5B4119415BB3591005B642E /* Kiwi.xcodeproj */;
@@ -103,7 +98,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C508B42715BA3AA100175FE4 /* SenTestingKit.framework in Frameworks */,
-				C5B4118915BB3498005B642E /* libiOS-StatefulNotifications.a in Frameworks */,
 				C508B42A15BA3AA100175FE4 /* Foundation.framework in Frameworks */,
 				C5B411A715BB35C8005B642E /* libKiwi.a in Frameworks */,
 			);
@@ -254,13 +248,11 @@
 				C508B42115BA3AA100175FE4 /* Frameworks */,
 				C508B42215BA3AA100175FE4 /* Resources */,
 				C508B42315BA3AA100175FE4 /* ShellScript */,
-				F08B38D629B24C8D9F88057D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				C5B411A915BB35E0005B642E /* PBXTargetDependency */,
-				C508B42C15BA3AA100175FE4 /* PBXTargetDependency */,
 			);
 			name = "iOS-StatefulNotificationsTests";
 			productName = "iOS-StatefulNotificationsTests";
@@ -391,17 +383,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C508B46215BA3D2700175FE4 /* SEStatelyNotificationRobotSpec.m in Sources */,
+				C5C8611A15C536A500D3471C /* SEStatelyNotificationHandler.m in Sources */,
+				C5C8611B15C536A500D3471C /* SEStatelyNotificationRobot.m in Sources */,
+				C5C8611C15C536A500D3471C /* SEStativeThing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C508B42C15BA3AA100175FE4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C508B41415BA3AA100175FE4 /* iOS-StatefulNotifications */;
-			targetProxy = C508B42B15BA3AA100175FE4 /* PBXContainerItemProxy */;
-		};
 		C5B411A915BB35E0005B642E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Kiwi;
@@ -505,10 +495,12 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "iOS-StatefulNotificationsTests/iOS-StatefulNotificationsTests-Info.plist";
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -527,10 +519,12 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOS-StatefulNotifications/iOS-StatefulNotifications-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "iOS-StatefulNotificationsTests/iOS-StatefulNotificationsTests-Info.plist";
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
