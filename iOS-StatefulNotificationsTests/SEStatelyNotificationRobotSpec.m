@@ -137,7 +137,7 @@ describe(@"SEStatelyNotificationRobot", ^{
     it(@"has a 'handlerIDsToHandlers' property (NSDictionary, 1 elem) mapping the passed-in handlerID to an init'ed SEStatelyNotificationHandler object", ^{
       [[robot.handlerIDsToHandlers should] haveCountOf:1];
       
-      id handler = [robot.handlerIDsToHandlers objectForKey:handlerID];
+      id handler = robot.handlerIDsToHandlers[handlerID];
       [handler shouldNotBeNil];
       [[handler should] beKindOfClass:[SEStatelyNotificationHandler class]];
     });
@@ -152,7 +152,7 @@ describe(@"SEStatelyNotificationRobot", ^{
       __block NSDictionary *newStateInfo;
       
       beforeAll(^{
-        newStateInfo = [NSDictionary dictionaryWithObject:@"the object" forKey:@"the key"];
+        newStateInfo = @{@"the key": @"the object"};
         [robot changeStateOf:stativeThingName to:newState stateInfo:newStateInfo];
       });
 

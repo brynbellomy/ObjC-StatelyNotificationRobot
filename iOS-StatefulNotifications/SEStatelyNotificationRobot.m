@@ -88,9 +88,13 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
                                                       object: nil queue: queue
                                                   usingBlock: ^(NSNotification *note) {
                                                     
-                                                      NSNumber *numState = [note.userInfo objectForKey: SEStatelyNotificationKey_State];
-                                                      SEState state = (numState != nil ? numState.integerValue : SEStateUndefined);
-                                                      NSDictionary *stateInfo = [note.userInfo objectForKey: SEStatelyNotificationKey_StateInfo];
+                                                      NSNumber *numState = note.userInfo[SEStatelyNotificationKey_State];
+                                                      NSAssert(numState != nil, @"numState is nil.");
+                                                    
+                                                      SEState state = numState.integerValue;
+                                                    
+                                                      NSDictionary *stateInfo = note.userInfo[SEStatelyNotificationKey_StateInfo];
+                                                      NSAssert(stateInfo != nil, @"stateInfo is nil.");
                                                     
                                                       block(state, stateInfo);
                                                   }];
@@ -106,19 +110,19 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   handler.notificationHandle = notificationHandle;
   
   NSAssert(handler != nil, @"SEStatelyNotificationHandler is nil.");
-  [self.handlerIDsToHandlers setObject:handler forKey:handlerID];
+  self.handlerIDsToHandlers[handlerID] = handler;
   
   
   // add an SEStativeThing object for this stativeThingName if it doesn't already exist
   
-  if ([self.stativeThingNamesToStativeThings objectForKey:stativeThingName] == nil) {
+  if (self.stativeThingNamesToStativeThings[stativeThingName] == nil) {
     SEStativeThing *newStativeThing = [[SEStativeThing alloc] init];
     newStativeThing.name = stativeThingName;
     newStativeThing.state = [NSNumber numberWithInteger:SEStateUndefined];
-    newStativeThing.stateInfo = [NSDictionary dictionary];
+    newStativeThing.stateInfo = @{};
     
     NSAssert(newStativeThing != nil, @"SEStativeThing is nil.");
-    [self.stativeThingNamesToStativeThings setObject:newStativeThing forKey:stativeThingName];
+    self.stativeThingNamesToStativeThings[stativeThingName] = newStativeThing;
   }
   
   // call the state handler block for the newly-registered observer immediately so it can sync with the current state
@@ -126,7 +130,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   __weak SEStatelyNotificationRobot *weakSelf = self;
   [queue addOperationWithBlock: ^{
       __strong SEStatelyNotificationRobot *strongSelf = weakSelf;
-      SEStativeThing *stativeThing = [strongSelf.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+      SEStativeThing *stativeThing = strongSelf.stativeThingNamesToStativeThings[stativeThingName];
       SEState state = (stativeThing.state != nil ? stativeThing.state.integerValue : SEStateUndefined);
       block(state, stativeThing.stateInfo);
   }];
@@ -144,18 +148,18 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   NSAssert(stativeThingName != nil, @"stativeThingName argument is nil.");
 
   // update the SEStativeThing object we have on file
-  SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+  SEStativeThing *stativeThing = self.stativeThingNamesToStativeThings[stativeThingName];
   
   if (stativeThing == nil) {
     stativeThing = [[SEStativeThing alloc] init];
     stativeThing.name = stativeThingName;
     
     NSAssert(stativeThing != nil, @"SEStativeThing object is nil.");
-    [self.stativeThingNamesToStativeThings setObject:stativeThing forKey:stativeThingName];
+    self.stativeThingNamesToStativeThings[stativeThingName] = stativeThing;
   }
   
   if (stateInfo == nil) {
-    stateInfo = [NSDictionary dictionary];
+    stateInfo = @{};
   }
   
   stativeThing.state = [NSNumber numberWithInteger:newState];
@@ -165,13 +169,14 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
   // trigger all of our handlers' blocks that we've registered with [NSNotificationCenter defaultCenter]
   
-  id keys[2], objects[2];
-  keys[0] = SEStatelyNotificationKey_State;     objects[0] = stativeThing.state;
-  keys[1] = SEStatelyNotificationKey_StateInfo; objects[1] = stativeThing.stateInfo;
+//  id keys[2], objects[2];
+//  keys[0] = SEStatelyNotificationKey_State;     objects[0] = stativeThing.state;
+//  keys[1] = SEStatelyNotificationKey_StateInfo; objects[1] = stativeThing.stateInfo;
   
   [[NSNotificationCenter defaultCenter] postNotificationName: stativeThing.name
                                                       object: nil
-                                                    userInfo: [NSDictionary dictionaryWithObjects:objects forKeys:keys count:2]];
+                                                    userInfo: @{ SEStatelyNotificationKey_State : stativeThing.state,
+                                                                 SEStatelyNotificationKey_StateInfo : stativeThing.stateInfo }];
 }
 
 
@@ -198,7 +203,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   
   NSMutableArray *handlerIDsToRemove = [NSMutableArray array];
   for (NSString *handlerID in self.handlerIDsToHandlers) {
-    SEStatelyNotificationHandler *handler = [self.handlerIDsToHandlers objectForKey:handlerID];
+    SEStatelyNotificationHandler *handler = self.handlerIDsToHandlers[handlerID];
     
     if ([stativeThingName isEqualToString:handler.stativeThingName]) {
       [handlerIDsToRemove addObject:handlerID];
@@ -226,7 +231,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 - (SEState) stateOf:(NSString *)stativeThingName {
   NSAssert(stativeThingName != nil, @"stativeThingName argument is nil.");
   
-  SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+  SEStativeThing *stativeThing = self.stativeThingNamesToStativeThings[stativeThingName];
   if (stativeThing == nil)
     return SEStateUndefined;
   else
@@ -238,7 +243,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 - (NSDictionary *) stateInfoForStateOf:(NSString *)stativeThingName {
   NSAssert(stativeThingName != nil, @"stativeThingName argument is nil.");
   
-  SEStativeThing *stativeThing = [self.stativeThingNamesToStativeThings objectForKey:stativeThingName];
+  SEStativeThing *stativeThing = self.stativeThingNamesToStativeThings[stativeThingName];
   return stativeThing.stateInfo;
 }
 
