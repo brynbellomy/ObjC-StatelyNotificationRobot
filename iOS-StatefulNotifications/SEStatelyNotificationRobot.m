@@ -118,7 +118,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   if (self.stativeThingNamesToStativeThings[stativeThingName] == nil) {
     SEStativeThing *newStativeThing = [[SEStativeThing alloc] init];
     newStativeThing.name = stativeThingName;
-    newStativeThing.state = [NSNumber numberWithInteger:SEStateUndefined];
+    newStativeThing.state = b(SEStateUndefined);
     newStativeThing.stateInfo = @{};
     
     NSAssert(newStativeThing != nil, @"SEStativeThing is nil.");
@@ -162,7 +162,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
     stateInfo = @{};
   }
   
-  stativeThing.state = [NSNumber numberWithInteger:newState];
+  stativeThing.state = b(newState);
   stativeThing.stateInfo = stateInfo;
   
     
