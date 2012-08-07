@@ -127,7 +127,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   
   // call the state handler block for the newly-registered observer immediately so it can sync with the current state
   
-  __weak SEStatelyNotificationRobot *weakSelf = self;
+  __bryn_weak SEStatelyNotificationRobot *weakSelf = self;
   [queue addOperationWithBlock: ^{
       __strong SEStatelyNotificationRobot *strongSelf = weakSelf;
       SEStativeThing *stativeThing = strongSelf.stativeThingNamesToStativeThings[stativeThingName];

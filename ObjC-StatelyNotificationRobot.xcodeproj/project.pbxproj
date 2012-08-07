@@ -22,7 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3A9882B5F0B04D7DAA7C6DBD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		B27209FCB2CA473BB87271A2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C508B41515BA3AA100175FE4 /* libObjC-StatelyNotificationRobot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libObjC-StatelyNotificationRobot.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C508B41815BA3AA100175FE4 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -38,6 +37,7 @@
 		C5786A8815D18DB400D265F0 /* SEStatelyNotificationRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEStatelyNotificationRobot.m; path = Classes/SEStatelyNotificationRobot.m; sourceTree = SOURCE_ROOT; };
 		C5786A8915D18DB400D265F0 /* SEStativeThing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEStativeThing.h; path = Classes/SEStativeThing.h; sourceTree = SOURCE_ROOT; };
 		C5786A8A15D18DB400D265F0 /* SEStativeThing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEStativeThing.m; path = Classes/SEStativeThing.m; sourceTree = SOURCE_ROOT; };
+		C5786ABA15D19E3000D265F0 /* Pods.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,11 +65,11 @@
 		C508B40A15BA3AA100175FE4 = {
 			isa = PBXGroup;
 			children = (
+				C5786ABA15D19E3000D265F0 /* Pods.xcconfig */,
 				C508B41A15BA3AA100175FE4 /* ObjC-StatelyNotificationRobot */,
 				C508B42E15BA3AA100175FE4 /* ObjC-StatelyNotificationRobotTests */,
 				C508B41715BA3AA100175FE4 /* Frameworks */,
 				C508B41615BA3AA100175FE4 /* Products */,
-				3A9882B5F0B04D7DAA7C6DBD /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -306,6 +306,7 @@
 /* Begin XCBuildConfiguration section */
 		C508B43715BA3AA100175FE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5786ABA15D19E3000D265F0 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -323,7 +324,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -334,6 +335,7 @@
 		};
 		C508B43815BA3AA100175FE4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5786ABA15D19E3000D265F0 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -344,7 +346,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -356,7 +358,7 @@
 		};
 		C508B43A15BA3AA100175FE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A9882B5F0B04D7DAA7C6DBD /* Pods.xcconfig */;
+			baseConfigurationReference = C5786ABA15D19E3000D265F0 /* Pods.xcconfig */;
 			buildSettings = {
 				DSTROOT = "/tmp/ObjC-StatelyNotificationRobot.dst";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -370,7 +372,7 @@
 		};
 		C508B43B15BA3AA100175FE4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A9882B5F0B04D7DAA7C6DBD /* Pods.xcconfig */;
+			baseConfigurationReference = C5786ABA15D19E3000D265F0 /* Pods.xcconfig */;
 			buildSettings = {
 				DSTROOT = "/tmp/ObjC-StatelyNotificationRobot.dst";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -384,6 +386,7 @@
 		};
 		C508B43D15BA3AA100175FE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5786ABA15D19E3000D265F0 /* Pods.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/xcodeproj.dst;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -408,6 +411,7 @@
 		};
 		C508B43E15BA3AA100175FE4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5786ABA15D19E3000D265F0 /* Pods.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/xcodeproj.dst;
 				FRAMEWORK_SEARCH_PATHS = (
