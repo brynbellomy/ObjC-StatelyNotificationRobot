@@ -13,3 +13,8 @@ build/*
 xcuserdata
 profile
 *.moved-aside
+
+Pods
+Podfile.lock
+
+docset_installed.txt
