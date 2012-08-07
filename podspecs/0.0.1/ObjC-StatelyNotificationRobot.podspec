@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source         = { :git => "/Users/bryn/repo/ObjC-StatelyNotificationRobot.git" }
   # s.platform     = :ios, '4.3'
   s.source_files = 'Classes/*.{h,m}'
-  s.ios.deployment_target = '5.0'
+  s.ios.deployment_target = '4.3'
   s.osx.deployment_target = '10.7'
 
   s.requires_arc = true
