@@ -61,8 +61,8 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 - (id) init {
   self = [super init];
   if (self) {
-    self.handlerIDsToHandlers = $mdict;
-    self.stativeThingNamesToStativeThings = $mdict;
+    self.handlerIDsToHandlers = $mdictnew;
+    self.stativeThingNamesToStativeThings = $mdictnew;
   }
   return self;
 }
@@ -201,7 +201,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   [self.stativeThingNamesToStativeThings removeObjectForKey: stativeThingName];
   
   
-  NSMutableArray *handlerIDsToRemove = $marr;
+  NSMutableArray *handlerIDsToRemove = $marrnew;
   for (NSString *handlerID in self.handlerIDsToHandlers) {
     SEStatelyNotificationHandler *handler = self.handlerIDsToHandlers[handlerID];
     
