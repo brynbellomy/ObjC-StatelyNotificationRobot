@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
   s.xcconfig = { 'PUBLIC_HEADERS_FOLDER_PATH' => 'include/$(TARGET_NAME)' }
 
   
-  s.dependency 'BrynKit'
+  s.dependency 'BrynKit/contracts'
+  s.dependency 'BrynKit/concise'
 
 end
