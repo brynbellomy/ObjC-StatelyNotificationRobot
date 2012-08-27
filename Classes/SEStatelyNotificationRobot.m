@@ -7,7 +7,6 @@
 //
 
 #import <BrynKit/Bryn.h>
-#import <ConciseKit/ConciseKit.h>
 #import "SEStatelyNotificationRobot.h"
 #import "SEStatelyNotificationHandler.h"
 #import "SEStativeThing.h"
@@ -38,9 +37,6 @@ Key(SEStatelyNotificationKey_StateInfo);
 
 @implementation SEStatelyNotificationRobot
 
-@synthesize handlerIDsToHandlers = _handlerIDsToHandlers;
-@synthesize stativeThingNamesToStativeThings = _stativeThingNamesToStativeThings;
-
 
 /**!
  * ## Class methods
@@ -59,7 +55,7 @@ Key(SEStatelyNotificationKey_StateInfo);
   static SEStatelyNotificationRobot *shared = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    shared = $new(SEStatelyNotificationRobot);
+    shared = [[SEStatelyNotificationRobot alloc] init];
   });
   return shared;
 }
@@ -82,8 +78,8 @@ Key(SEStatelyNotificationKey_StateInfo);
 - (id) init {
   self = [super init];
   if (self) {
-    self.handlerIDsToHandlers = $mdictnew;
-    self.stativeThingNamesToStativeThings = $mdictnew;
+    self.handlerIDsToHandlers = [NSMutableDictionary dictionary];
+    self.stativeThingNamesToStativeThings = [NSMutableDictionary dictionary];
   }
   return self;
 }
@@ -140,7 +136,7 @@ Key(SEStatelyNotificationKey_StateInfo);
   // doesn't have to worry about storing the handle or doing anything complicated
   // when removing the handler
   
-  SEStatelyNotificationHandler *handler = $new(SEStatelyNotificationHandler);
+  SEStatelyNotificationHandler *handler = [[SEStatelyNotificationHandler alloc] init];
   handler.handlerID = handlerID;
   handler.stativeThingName = stativeThingName;
   handler.notificationHandle = notificationHandle;
@@ -152,9 +148,9 @@ Key(SEStatelyNotificationKey_StateInfo);
   // add an SEStativeThing object for this stativeThingName if it doesn't already exist
   
   if (self.stativeThingNamesToStativeThings[stativeThingName] == nil) {
-    SEStativeThing *newStativeThing = $new(SEStativeThing);
+    SEStativeThing *newStativeThing = [[SEStativeThing alloc] init];
     newStativeThing.name = stativeThingName;
-    newStativeThing.state = b(SEStateUndefined);
+    newStativeThing.state = @(SEStateUndefined);
     newStativeThing.stateInfo = @{};
     
     NSAssert(newStativeThing != nil, @"SEStativeThing is nil.");
@@ -206,7 +202,7 @@ Key(SEStatelyNotificationKey_StateInfo);
   SEStativeThing *stativeThing = self.stativeThingNamesToStativeThings[stativeThingName];
   
   if (stativeThing == nil) {
-    stativeThing = $new(SEStativeThing);
+    stativeThing = [[SEStativeThing alloc] init];
     stativeThing.name = stativeThingName;
     
     NSAssert(stativeThing != nil, @"SEStativeThing object is nil.");
@@ -271,7 +267,7 @@ Key(SEStatelyNotificationKey_StateInfo);
   [self.stativeThingNamesToStativeThings removeObjectForKey: stativeThingName];
   
   
-  NSMutableArray *handlerIDsToRemove = $marrnew;
+  NSMutableArray *handlerIDsToRemove = [NSMutableArray array];
   for (NSString *handlerID in self.handlerIDsToHandlers) {
     SEStatelyNotificationHandler *handler = self.handlerIDsToHandlers[handlerID];
     

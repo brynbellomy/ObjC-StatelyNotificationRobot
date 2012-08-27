@@ -1,3 +1,3 @@
 platform :ios
 
-pod 'BrynKit'
+pod "BrynKit"
