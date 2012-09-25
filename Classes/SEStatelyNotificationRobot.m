@@ -1,23 +1,24 @@
 //
-//  SEStatelyNotificationRobot.m
-//  SEStatelyNotificationRobot
+// SEStatelyNotificationRobot.m  
+// SEStatelyNotificationRobot  
 //
-//  Created by bryn austin bellomy on 7/8/12.
-//  Copyright (c) 2012 robot bubble bath LLC. All rights reserved.
+// Created by bryn austin bellomy on 7/8/12.  
+// Copyright (c) 2012 robot bubble bath LLC. All rights reserved.  
 //
 
+#import <BrynKit/Bryn.h>
+#import <ConciseKit/ConciseKit.h>
 #import "SEStatelyNotificationRobot.h"
 #import "SEStatelyNotificationHandler.h"
 #import "SEStativeThing.h"
 
 
-static NSString *const SEStatelyNotificationKey_State = @"SEStatelyNotificationKey_State";
-static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificationKey_StateInfo";
+Key(SEStatelyNotificationKey_State);
+Key(SEStatelyNotificationKey_StateInfo);
 
 
-
-/**
- * private interface
+/**!
+ * # Private interface
  */
 
 @interface SEStatelyNotificationRobot ()
@@ -31,8 +32,8 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
 
 
-/**
- * implementation
+/**!
+ * # Implementation
  */
 
 @implementation SEStatelyNotificationRobot
@@ -41,8 +42,18 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 @synthesize stativeThingNamesToStativeThings = _stativeThingNamesToStativeThings;
 
 
+/**!
+ * ## Class methods
+ */
+
 #pragma mark- Class methods
 #pragma mark-
+
+/**!
+ * #### sharedRobot
+ * 
+ * @return {SEStatelyNotificationRobot*}
+ */
 
 + (SEStatelyNotificationRobot *) sharedRobot {
   static SEStatelyNotificationRobot *shared = nil;
@@ -55,8 +66,18 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
 
 
+/**!
+ * ## Lifecycle
+ */
+
 #pragma mark- Lifecycle
 #pragma mark-
+
+/**!
+ * #### init
+ * 
+ * @return {id}
+ */
 
 - (id) init {
   self = [super init];
@@ -69,8 +90,23 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
 
 
+/**!
+ * ## State tracking and changing
+ */
+
 #pragma mark- State tracking and changing
 #pragma mark-
+
+/**!
+ * #### handleStateOf:handlerID:onQueue:withBlock:
+ * 
+ * @param {NSString*} stativeThingName
+ * @param {NSString*} handlerID
+ * @param {NSOperationQueue*} queue
+ * @param {SEStateHandlerBlock} block
+ * 
+ * @return {void}
+ */
 
 - (void) handleStateOf: (NSString *)stativeThingName
              handlerID: (NSString *)handlerID
@@ -84,20 +120,20 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   // add a regular block-based NSNotification observer
   
   id notificationHandle = 
-    [[NSNotificationCenter defaultCenter] addObserverForName: stativeThingName 
-                                                      object: nil queue: queue
-                                                  usingBlock: ^(NSNotification *note) {
+    [NSNotificationCenter.defaultCenter addObserverForName: stativeThingName 
+                                                    object: nil queue: queue
+                                                usingBlock: ^(NSNotification *note) {
                                                     
-                                                      NSNumber *numState = note.userInfo[SEStatelyNotificationKey_State];
-                                                      NSAssert(numState != nil, @"numState is nil.");
-                                                    
-                                                      SEState state = numState.integerValue;
-                                                    
-                                                      NSDictionary *stateInfo = note.userInfo[SEStatelyNotificationKey_StateInfo];
-                                                      NSAssert(stateInfo != nil, @"stateInfo is nil.");
-                                                    
-                                                      block(state, stateInfo);
-                                                  }];
+                                                    NSNumber *numState = note.userInfo[SEStatelyNotificationKey_State];
+                                                    NSAssert(numState != nil, @"numState is nil.");
+                                                  
+                                                    SEState state = numState.integerValue;
+                                                  
+                                                    NSDictionary *stateInfo = note.userInfo[SEStatelyNotificationKey_StateInfo];
+                                                    NSAssert(stateInfo != nil, @"stateInfo is nil.");
+                                                  
+                                                    block(state, stateInfo);
+                                                }];
   
   
   // record the handle and stativeThingName under the handlerID so the caller
@@ -138,11 +174,30 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
 
 
+/**!
+ * #### changeStateOf:to:
+ * 
+ * @param {NSString*} stativeThingName
+ * @param {SEState} newState
+ * 
+ * @return {void}
+ */
+
 - (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState {
   [self changeStateOf:stativeThingName to:newState stateInfo:nil];
 }
 
 
+
+/**!
+ * #### changeStateOf:to:stateInfo:
+ * 
+ * @param {NSString*} stativeThingName
+ * @param {SEState} newState
+ * @param {NSDictionary*} stateInfo
+ * 
+ * @return {void}
+ */
 
 - (void) changeStateOf:(NSString *)stativeThingName to:(SEState)newState stateInfo:(NSDictionary *)stateInfo {
   NSAssert(stativeThingName != nil, @"stativeThingName argument is nil.");
@@ -167,22 +222,29 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   
     
 
-  // trigger all of our handlers' blocks that we've registered with [NSNotificationCenter defaultCenter]
-  
-//  id keys[2], objects[2];
-//  keys[0] = SEStatelyNotificationKey_State;     objects[0] = stativeThing.state;
-//  keys[1] = SEStatelyNotificationKey_StateInfo; objects[1] = stativeThing.stateInfo;
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName: stativeThing.name
-                                                      object: nil
-                                                    userInfo: @{ SEStatelyNotificationKey_State : stativeThing.state,
-                                                                 SEStatelyNotificationKey_StateInfo : stativeThing.stateInfo }];
+  // trigger all of our handlers' blocks that we've registered with NSNotificationCenter.defaultCenter
+  [NSNotificationCenter.defaultCenter postNotificationName: stativeThing.name
+                                                    object: nil
+                                                  userInfo: @{ SEStatelyNotificationKey_State : stativeThing.state,
+                                                               SEStatelyNotificationKey_StateInfo : stativeThing.stateInfo }];
 }
 
 
 
+/**!
+ * ## Stop tracking state
+ */
+
 #pragma mark- Stop tracking state
 #pragma mark-
+
+/**!
+ * #### removeHandlerWithID:
+ * 
+ * @param {NSString*} handlerID
+ * 
+ * @return {void}
+ */
 
 - (void) removeHandlerWithID:(NSString *)handlerID {
   NSAssert(handlerID != nil, @"handlerID argument is nil.");
@@ -194,6 +256,14 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 }
 
 
+
+/**!
+ * #### stopTrackingStateOf:
+ * 
+ * @param {NSString*} stativeThingName
+ * 
+ * @return {void}
+ */
 
 - (void) stopTrackingStateOf: (NSString *)stativeThingName {
   NSAssert(stativeThingName != nil, @"stativeThingName argument is nil.");
@@ -211,12 +281,18 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
   }
   
   // this should dealloc all of the handler objects, which will cause each of those
-  // objects to unregister with [NSNotificationCenter defaultCenter]
+  // objects to unregister with NSNotificationCenter.defaultCenter
   
   [self.handlerIDsToHandlers removeObjectsForKeys:handlerIDsToRemove];
 }
 
 
+
+/**!
+ * #### stopTrackingAllStates
+ * 
+ * @return {void}
+ */
 
 - (void) stopTrackingAllStates {
   [self.stativeThingNamesToStativeThings removeAllObjects];
@@ -225,8 +301,20 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
 
 
+/**!
+ * ## Public accessors for SEStativeThing objects
+ */
+
 #pragma mark- Public accessors for SEStativeThing objects
 #pragma mark-
+
+/**!
+ * #### stateOf:
+ * 
+ * @param {NSString*} stativeThingName
+ * 
+ * @return {SEState}
+ */
 
 - (SEState) stateOf:(NSString *)stativeThingName {
   NSAssert(stativeThingName != nil, @"stativeThingName argument is nil.");
@@ -240,6 +328,14 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
 
 
+/**!
+ * #### stateInfoForStateOf:
+ * 
+ * @param {NSString*} stativeThingName
+ * 
+ * @return {NSDictionary*}
+ */
+
 - (NSDictionary *) stateInfoForStateOf:(NSString *)stativeThingName {
   NSAssert(stativeThingName != nil, @"stativeThingName argument is nil.");
   
@@ -251,6 +347,7 @@ static NSString *const SEStatelyNotificationKey_StateInfo = @"SEStatelyNotificat
 
 
 @end
+
 
 
 
