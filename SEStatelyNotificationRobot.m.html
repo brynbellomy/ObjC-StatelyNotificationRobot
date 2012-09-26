@@ -1,0 +1,303 @@
+<!DOCTYPE html><html><head><title>SEStatelyNotificationRobot.m</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><link rel="stylesheet" media="all" href="doc-style.css"><script src="doc-filelist.js"></script><script>var relativeDir = '', thisFile = '/Users/bryn/.otis/templates/tmpl.jade', defaultSidebar = true;</script><script src="doc-script.js"></script></head><body><div id="sidebar_wrapper"><div id="sidebar_switch"><span class="tree">Files</span><span class="headings">Headings</span></div><div id="tree"></div><div id="headings"><div class="heading h1"><a href="#private-interface">Private interface</a></div><div class="heading h1"><a href="#implementation">Implementation</a></div><div class="heading h2"><a href="#class-methods">Class methods</a></div><div class="heading h4"><a href="#sharedrobot">sharedRobot</a></div><div class="heading h2"><a href="#lifecycle">Lifecycle</a></div><div class="heading h4"><a href="#init">init</a></div><div class="heading h2"><a href="#state-tracking-and-changing">State tracking and changing</a></div><div class="heading h4"><a href="#handlestateof-handlerid-onqueue-withblock-">handleStateOf:handlerID:onQueue:withBlock:</a></div><div class="heading h4"><a href="#changestateof-to-">changeStateOf:to:</a></div><div class="heading h4"><a href="#changestateof-to-stateinfo-">changeStateOf:to:stateInfo:</a></div><div class="heading h2"><a href="#stop-tracking-state">Stop tracking state</a></div><div class="heading h4"><a href="#removehandlerwithid-">removeHandlerWithID:</a></div><div class="heading h4"><a href="#stoptrackingstateof-">stopTrackingStateOf:</a></div><div class="heading h4"><a href="#stoptrackingallstates">stopTrackingAllStates</a></div><div class="heading h2"><a href="#public-accessors-for-sestativething-objects">Public accessors for SEStativeThing objects</a></div><div class="heading h4"><a href="#stateof-">stateOf:</a></div><div class="heading h4"><a href="#stateinfoforstateof-">stateInfoForStateOf:</a></div></div></div><div id="sidebar-toggle"></div><div id="container"><div class="background highlight"></div><table cellpadding="0" cellspacing="0"><tbody><tr><td class="docs"><h1>SEStatelyNotificationRobot.m</h1></td><td class="code highlight"></td></tr><tr><td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+</td><td class="code highlight"><div class="highlight"><pre><span class="cp">//</span>
+<span class="cp">// SEStatelyNotificationRobot.m  </span>
+<span class="cp">// SEStatelyNotificationRobot  </span>
+<span class="cp">//</span>
+<span class="cp">// Created by bryn austin bellomy on 7/8/12.  </span>
+<span class="cp">// Copyright (c) 2012 robot bubble bath LLC. All rights reserved.  </span>
+<span class="cp">//</span>
+
+<span class="cp">#import &lt;BrynKit/Bryn.h&gt;</span>
+<span class="cp">#import &quot;SEStatelyNotificationRobot.h&quot;</span>
+<span class="cp">#import &quot;SEStatelyNotificationHandler.h&quot;</span>
+<span class="cp">#import &quot;SEStativeThing.h&quot;</span>
+
+
+<span class="n">Key</span><span class="p">(</span><span class="n">SEStatelyNotificationKey_State</span><span class="p">);</span>
+<span class="n">Key</span><span class="p">(</span><span class="n">SEStatelyNotificationKey_StateInfo</span><span class="p">);</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="private-interface">
+  <h1>
+    <a href="#private-interface" class="pilcrow">&#182;</a>
+    Private interface
+  </h1>
+</div>
+</div><div class="body"></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">@interface</span> <span class="nc">SEStatelyNotificationRobot</span> <span class="p">()</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">)</span> <span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="n">handlerIDsToHandlers</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">)</span> <span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">;</span>
+
+<span class="k">@end</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="implementation">
+  <h1>
+    <a href="#implementation" class="pilcrow">&#182;</a>
+    Implementation
+  </h1>
+</div>
+</div><div class="body"></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">@implementation</span> <span class="nc">SEStatelyNotificationRobot</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="class-methods">
+  <h2>
+    <a href="#class-methods" class="pilcrow">&#182;</a>
+    Class methods
+  </h2>
+</div>
+</div><div class="body"></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="cp">#pragma mark- Class methods</span>
+<span class="cp">#pragma mark-</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="sharedrobot">
+  <h4>
+    <a href="#sharedrobot" class="pilcrow">&#182;</a>
+    sharedRobot
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">SEStatelyNotificationRobot*</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">+</span> <span class="p">(</span><span class="n">SEStatelyNotificationRobot</span> <span class="o">*</span><span class="p">)</span> <span class="nf">sharedRobot</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="n">SEStatelyNotificationRobot</span> <span class="o">*</span><span class="n">shared</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+  <span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
+  <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+    <span class="n">shared</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SEStatelyNotificationRobot</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="n">shared</span><span class="p">;</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="lifecycle">
+  <h2>
+    <a href="#lifecycle" class="pilcrow">&#182;</a>
+    Lifecycle
+  </h2>
+</div>
+</div><div class="body"></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="cp">#pragma mark- Lifecycle</span>
+<span class="cp">#pragma mark-</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="init">
+  <h4>
+    <a href="#init" class="pilcrow">&#182;</a>
+    init
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">id</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span> <span class="nf">init</span> <span class="p">{</span>
+  <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">handlerIDsToHandlers</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableDictionary</span> <span class="n">dictionary</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableDictionary</span> <span class="n">dictionary</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="state-tracking-and-changing">
+  <h2>
+    <a href="#state-tracking-and-changing" class="pilcrow">&#182;</a>
+    State tracking and changing
+  </h2>
+</div>
+</div><div class="body"></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="cp">#pragma mark- State tracking and changing</span>
+<span class="cp">#pragma mark-</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="handlestateof-handlerid-onqueue-withblock-">
+  <h4>
+    <a href="#handlestateof-handlerid-onqueue-withblock-" class="pilcrow">&#182;</a>
+    handleStateOf:handlerID:onQueue:withBlock:
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">stativeThingName</code></div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">handlerID</code></div><div class="dox_tag_detail"><span class="dox_type">NSOperationQueue*</span><code class="name">queue</code></div><div class="dox_tag_detail"><span class="dox_type">SEStateHandlerBlock</span><code class="name">block</code></div><div class="dox_tag_title"></div><div class="dox_tag_detail"></div><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">void</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">handleStateOf:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span>
+             <span class="nf">handlerID:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">handlerID</span>
+               <span class="nf">onQueue:</span> <span class="p">(</span><span class="n">NSOperationQueue</span> <span class="o">*</span><span class="p">)</span><span class="nv">queue</span>
+             <span class="nf">withBlock:</span> <span class="p">(</span><span class="n">SEStateHandlerBlock</span><span class="p">)</span><span class="nv">block</span> <span class="p">{</span>
+  
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">stativeThingName</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;stativeThingName argument is nil.&quot;</span><span class="p">);</span>
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">handlerID</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;handlerID argument is nil.&quot;</span><span class="p">);</span>
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">queue</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;queue argument is nil.&quot;</span><span class="p">);</span>
+  
+  <span class="c1">// add a regular block-based NSNotification observer</span>
+  
+  <span class="kt">id</span> <span class="n">notificationHandle</span> <span class="o">=</span> 
+    <span class="p">[</span><span class="n">NSNotificationCenter</span><span class="p">.</span><span class="n">defaultCenter</span> <span class="nl">addObserverForName:</span> <span class="n">stativeThingName</span> 
+                                                    <span class="nl">object:</span> <span class="nb">nil</span> <span class="nl">queue:</span> <span class="n">queue</span>
+                                                <span class="nl">usingBlock:</span> <span class="o">^</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="n">note</span><span class="p">)</span> <span class="p">{</span>
+                                                    
+                                                    <span class="n">NSNumber</span> <span class="o">*</span><span class="n">numState</span> <span class="o">=</span> <span class="n">note</span><span class="p">.</span><span class="n">userInfo</span><span class="p">[</span><span class="n">SEStatelyNotificationKey_State</span><span class="p">];</span>
+                                                    <span class="n">NSAssert</span><span class="p">(</span><span class="n">numState</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;numState is nil.&quot;</span><span class="p">);</span>
+                                                  
+                                                    <span class="n">SEState</span> <span class="n">state</span> <span class="o">=</span> <span class="n">numState</span><span class="p">.</span><span class="n">integerValue</span><span class="p">;</span>
+                                                  
+                                                    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">stateInfo</span> <span class="o">=</span> <span class="n">note</span><span class="p">.</span><span class="n">userInfo</span><span class="p">[</span><span class="n">SEStatelyNotificationKey_StateInfo</span><span class="p">];</span>
+                                                    <span class="n">NSAssert</span><span class="p">(</span><span class="n">stateInfo</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;stateInfo is nil.&quot;</span><span class="p">);</span>
+                                                  
+                                                    <span class="n">block</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">stateInfo</span><span class="p">);</span>
+                                                <span class="p">}];</span>
+  
+  
+  <span class="c1">// record the handle and stativeThingName under the handlerID so the caller</span>
+  <span class="c1">// doesn&#39;t have to worry about storing the handle or doing anything complicated</span>
+  <span class="c1">// when removing the handler</span>
+  
+  <span class="n">SEStatelyNotificationHandler</span> <span class="o">*</span><span class="n">handler</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SEStatelyNotificationHandler</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+  <span class="n">handler</span><span class="p">.</span><span class="n">handlerID</span> <span class="o">=</span> <span class="n">handlerID</span><span class="p">;</span>
+  <span class="n">handler</span><span class="p">.</span><span class="n">stativeThingName</span> <span class="o">=</span> <span class="n">stativeThingName</span><span class="p">;</span>
+  <span class="n">handler</span><span class="p">.</span><span class="n">notificationHandle</span> <span class="o">=</span> <span class="n">notificationHandle</span><span class="p">;</span>
+  
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">handler</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;SEStatelyNotificationHandler is nil.&quot;</span><span class="p">);</span>
+  <span class="n">self</span><span class="p">.</span><span class="n">handlerIDsToHandlers</span><span class="p">[</span><span class="n">handlerID</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler</span><span class="p">;</span>
+  
+  
+  <span class="c1">// add an SEStativeThing object for this stativeThingName if it doesn&#39;t already exist</span>
+  
+  <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">[</span><span class="n">stativeThingName</span><span class="p">]</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">SEStativeThing</span> <span class="o">*</span><span class="n">newStativeThing</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SEStativeThing</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+    <span class="n">newStativeThing</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">stativeThingName</span><span class="p">;</span>
+    <span class="n">newStativeThing</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">SEStateUndefined</span><span class="p">);</span>
+    <span class="n">newStativeThing</span><span class="p">.</span><span class="n">stateInfo</span> <span class="o">=</span> <span class="err">@</span><span class="p">{};</span>
+    
+    <span class="n">NSAssert</span><span class="p">(</span><span class="n">newStativeThing</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;SEStativeThing is nil.&quot;</span><span class="p">);</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">[</span><span class="n">stativeThingName</span><span class="p">]</span> <span class="o">=</span> <span class="n">newStativeThing</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="c1">// call the state handler block for the newly-registered observer immediately so it can sync with the current state</span>
+  
+  <span class="n">__bryn_weak</span> <span class="n">SEStatelyNotificationRobot</span> <span class="o">*</span><span class="n">weakSelf</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+  <span class="p">[</span><span class="n">queue</span> <span class="nl">addOperationWithBlock:</span> <span class="o">^</span><span class="p">{</span>
+      <span class="n">__strong</span> <span class="n">SEStatelyNotificationRobot</span> <span class="o">*</span><span class="n">strongSelf</span> <span class="o">=</span> <span class="n">weakSelf</span><span class="p">;</span>
+      <span class="n">SEStativeThing</span> <span class="o">*</span><span class="n">stativeThing</span> <span class="o">=</span> <span class="n">strongSelf</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">[</span><span class="n">stativeThingName</span><span class="p">];</span>
+      <span class="n">SEState</span> <span class="n">state</span> <span class="o">=</span> <span class="p">(</span><span class="n">stativeThing</span><span class="p">.</span><span class="n">state</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="o">?</span> <span class="n">stativeThing</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">integerValue</span> <span class="o">:</span> <span class="n">SEStateUndefined</span><span class="p">);</span>
+      <span class="n">block</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">stativeThing</span><span class="p">.</span><span class="n">stateInfo</span><span class="p">);</span>
+  <span class="p">}];</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="changestateof-to-">
+  <h4>
+    <a href="#changestateof-to-" class="pilcrow">&#182;</a>
+    changeStateOf:to:
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">stativeThingName</code></div><div class="dox_tag_detail"><span class="dox_type">SEState</span><code class="name">newState</code></div><div class="dox_tag_title"></div><div class="dox_tag_detail"></div><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">void</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">changeStateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="nf">to:</span><span class="p">(</span><span class="n">SEState</span><span class="p">)</span><span class="nv">newState</span> <span class="p">{</span>
+  <span class="p">[</span><span class="n">self</span> <span class="nl">changeStateOf:</span><span class="n">stativeThingName</span> <span class="nl">to:</span><span class="n">newState</span> <span class="nl">stateInfo:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="changestateof-to-stateinfo-">
+  <h4>
+    <a href="#changestateof-to-stateinfo-" class="pilcrow">&#182;</a>
+    changeStateOf:to:stateInfo:
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">stativeThingName</code></div><div class="dox_tag_detail"><span class="dox_type">SEState</span><code class="name">newState</code></div><div class="dox_tag_detail"><span class="dox_type">NSDictionary*</span><code class="name">stateInfo</code></div><div class="dox_tag_title"></div><div class="dox_tag_detail"></div><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">void</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">changeStateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="nf">to:</span><span class="p">(</span><span class="n">SEState</span><span class="p">)</span><span class="nv">newState</span> <span class="nf">stateInfo:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">stateInfo</span> <span class="p">{</span>
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">stativeThingName</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;stativeThingName argument is nil.&quot;</span><span class="p">);</span>
+
+  <span class="c1">// update the SEStativeThing object we have on file</span>
+  <span class="n">SEStativeThing</span> <span class="o">*</span><span class="n">stativeThing</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">[</span><span class="n">stativeThingName</span><span class="p">];</span>
+  
+  <span class="k">if</span> <span class="p">(</span><span class="n">stativeThing</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">stativeThing</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SEStativeThing</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+    <span class="n">stativeThing</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">stativeThingName</span><span class="p">;</span>
+    
+    <span class="n">NSAssert</span><span class="p">(</span><span class="n">stativeThing</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;SEStativeThing object is nil.&quot;</span><span class="p">);</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">[</span><span class="n">stativeThingName</span><span class="p">]</span> <span class="o">=</span> <span class="n">stativeThing</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="k">if</span> <span class="p">(</span><span class="n">stateInfo</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">stateInfo</span> <span class="o">=</span> <span class="err">@</span><span class="p">{};</span>
+  <span class="p">}</span>
+  
+  <span class="n">stativeThing</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">b</span><span class="p">(</span><span class="n">newState</span><span class="p">);</span>
+  <span class="n">stativeThing</span><span class="p">.</span><span class="n">stateInfo</span> <span class="o">=</span> <span class="n">stateInfo</span><span class="p">;</span>
+  
+    
+
+  <span class="c1">// trigger all of our handlers&#39; blocks that we&#39;ve registered with NSNotificationCenter.defaultCenter</span>
+  <span class="p">[</span><span class="n">NSNotificationCenter</span><span class="p">.</span><span class="n">defaultCenter</span> <span class="nl">postNotificationName:</span> <span class="n">stativeThing</span><span class="p">.</span><span class="n">name</span>
+                                                    <span class="nl">object:</span> <span class="nb">nil</span>
+                                                  <span class="nl">userInfo:</span> <span class="err">@</span><span class="p">{</span> <span class="n">SEStatelyNotificationKey_State</span> <span class="o">:</span> <span class="n">stativeThing</span><span class="p">.</span><span class="n">state</span><span class="p">,</span>
+                                                               <span class="n">SEStatelyNotificationKey_StateInfo</span> <span class="o">:</span> <span class="n">stativeThing</span><span class="p">.</span><span class="n">stateInfo</span> <span class="p">}];</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="stop-tracking-state">
+  <h2>
+    <a href="#stop-tracking-state" class="pilcrow">&#182;</a>
+    Stop tracking state
+  </h2>
+</div>
+</div><div class="body"></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="cp">#pragma mark- Stop tracking state</span>
+<span class="cp">#pragma mark-</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="removehandlerwithid-">
+  <h4>
+    <a href="#removehandlerwithid-" class="pilcrow">&#182;</a>
+    removeHandlerWithID:
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">handlerID</code></div><div class="dox_tag_title"></div><div class="dox_tag_detail"></div><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">void</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">removeHandlerWithID:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">handlerID</span> <span class="p">{</span>
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">handlerID</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;handlerID argument is nil.&quot;</span><span class="p">);</span>
+  
+  <span class="c1">// remove the handler from the identifiers-to-handles dictionary.  when the</span>
+  <span class="c1">// handler deallocs, it will remove its observer from the default NSNotificationCenter.</span>
+  
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">handlerIDsToHandlers</span> <span class="nl">removeObjectForKey:</span><span class="n">handlerID</span><span class="p">];</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="stoptrackingstateof-">
+  <h4>
+    <a href="#stoptrackingstateof-" class="pilcrow">&#182;</a>
+    stopTrackingStateOf:
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">stativeThingName</code></div><div class="dox_tag_title"></div><div class="dox_tag_detail"></div><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">void</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">stopTrackingStateOf:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="p">{</span>
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">stativeThingName</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;stativeThingName argument is nil.&quot;</span><span class="p">);</span>
+  
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span> <span class="nl">removeObjectForKey:</span> <span class="n">stativeThingName</span><span class="p">];</span>
+  
+  
+  <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">handlerIDsToRemove</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="n">array</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">handlerID</span> <span class="k">in</span> <span class="n">self</span><span class="p">.</span><span class="n">handlerIDsToHandlers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">SEStatelyNotificationHandler</span> <span class="o">*</span><span class="n">handler</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">handlerIDsToHandlers</span><span class="p">[</span><span class="n">handlerID</span><span class="p">];</span>
+    
+    <span class="k">if</span> <span class="p">([</span><span class="n">stativeThingName</span> <span class="nl">isEqualToString:</span><span class="n">handler</span><span class="p">.</span><span class="n">stativeThingName</span><span class="p">])</span> <span class="p">{</span>
+      <span class="p">[</span><span class="n">handlerIDsToRemove</span> <span class="nl">addObject:</span><span class="n">handlerID</span><span class="p">];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="c1">// this should dealloc all of the handler objects, which will cause each of those</span>
+  <span class="c1">// objects to unregister with NSNotificationCenter.defaultCenter</span>
+  
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">handlerIDsToHandlers</span> <span class="nl">removeObjectsForKeys:</span><span class="n">handlerIDsToRemove</span><span class="p">];</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="stoptrackingallstates">
+  <h4>
+    <a href="#stoptrackingallstates" class="pilcrow">&#182;</a>
+    stopTrackingAllStates
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">void</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">stopTrackingAllStates</span> <span class="p">{</span>
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span> <span class="n">removeAllObjects</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">handlerIDsToHandlers</span> <span class="n">removeAllObjects</span><span class="p">];</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="public-accessors-for-sestativething-objects">
+  <h2>
+    <a href="#public-accessors-for-sestativething-objects" class="pilcrow">&#182;</a>
+    Public accessors for SEStativeThing objects
+  </h2>
+</div>
+</div><div class="body"></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="cp">#pragma mark- Public accessors for SEStativeThing objects</span>
+<span class="cp">#pragma mark-</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="stateof-">
+  <h4>
+    <a href="#stateof-" class="pilcrow">&#182;</a>
+    stateOf:
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">stativeThingName</code></div><div class="dox_tag_title"></div><div class="dox_tag_detail"></div><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">SEState</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="n">SEState</span><span class="p">)</span> <span class="nf">stateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="p">{</span>
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">stativeThingName</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;stativeThingName argument is nil.&quot;</span><span class="p">);</span>
+  
+  <span class="n">SEStativeThing</span> <span class="o">*</span><span class="n">stativeThing</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">[</span><span class="n">stativeThingName</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">stativeThing</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">SEStateUndefined</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="n">stativeThing</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">integerValue</span><span class="p">;</span>
+<span class="p">}</span></pre></div></td></tr><tr><td class="docs"><div class="dox"><div class="summary">
+<div class="pilwrap" id="stateinfoforstateof-">
+  <h4>
+    <a href="#stateinfoforstateof-" class="pilcrow">&#182;</a>
+    stateInfoForStateOf:
+  </h4>
+</div>
+</div><div class="body"></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span class="dox_type">NSString*</span><code class="name">stativeThingName</code></div><div class="dox_tag_title"></div><div class="dox_tag_detail"></div><div class="dox_tag_title">Return</div><div class="dox_tag_detail"><span class="dox_type">NSDictionary*</span></div></div></div></td><td class="code highlight"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span> <span class="nf">stateInfoForStateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="p">{</span>
+  <span class="n">NSAssert</span><span class="p">(</span><span class="n">stativeThingName</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@&quot;stativeThingName argument is nil.&quot;</span><span class="p">);</span>
+  
+  <span class="n">SEStativeThing</span> <span class="o">*</span><span class="n">stativeThing</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">stativeThingNamesToStativeThings</span><span class="p">[</span><span class="n">stativeThingName</span><span class="p">];</span>
+  <span class="k">return</span> <span class="n">stativeThing</span><span class="p">.</span><span class="n">stateInfo</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+
+
+<span class="k">@end</span>
+</pre></div></td></tr></tbody></table></div></body></html>

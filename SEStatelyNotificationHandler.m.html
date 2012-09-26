@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><title>SEStatelyNotificationHandler.m</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><link rel="stylesheet" media="all" href="doc-style.css"><script src="doc-filelist.js"></script><script>var relativeDir = '', thisFile = '/Users/bryn/.otis/templates/tmpl.jade', defaultSidebar = true;</script><script src="doc-script.js"></script></head><body><div id="sidebar_wrapper"><div id="sidebar_switch"><span class="tree">Files</span><span class="headings">Headings</span></div><div id="tree"></div><div id="headings"></div></div><div id="sidebar-toggle"></div><div id="container"><div class="background highlight"></div><table cellpadding="0" cellspacing="0"><tbody><tr><td class="docs"><h1>SEStatelyNotificationHandler.m</h1></td><td class="code highlight"></td></tr><tr><td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+</td><td class="code highlight"><div class="highlight"><pre><span class="cp">//</span>
+<span class="cp">//  SEStatelyNotificationHandler.m</span>
+<span class="cp">//  SEStatelyNotificationRobot</span>
+<span class="cp">//</span>
+<span class="cp">//  Created by bryn austin bellomy on 7/8/12.</span>
+<span class="cp">//  Copyright (c) 2012 robot bubble bath LLC. All rights reserved.</span>
+<span class="cp">//</span>
+
+<span class="cp">#import &quot;SEStatelyNotificationHandler.h&quot;</span>
+
+
+<span class="k">@implementation</span> <span class="nc">SEStatelyNotificationHandler</span>
+
+<span class="k">@synthesize</span> <span class="n">handlerID</span> <span class="o">=</span> <span class="n">_handlerID</span><span class="p">;</span>
+<span class="k">@synthesize</span> <span class="n">stativeThingName</span> <span class="o">=</span> <span class="n">_stativeThingName</span><span class="p">;</span>
+<span class="k">@synthesize</span> <span class="n">notificationHandle</span> <span class="o">=</span> <span class="n">_notificationHandle</span><span class="p">;</span>
+
+
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">dealloc</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">notificationHandle</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span>
+    <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">removeObserver:</span> <span class="n">self</span><span class="p">.</span><span class="n">notificationHandle</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</pre></div></td></tr></tbody></table></div></body></html>

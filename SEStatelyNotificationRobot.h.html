@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head><title>SEStatelyNotificationRobot.h</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><link rel="stylesheet" media="all" href="doc-style.css"><script src="doc-filelist.js"></script><script>var relativeDir = '', thisFile = '/Users/bryn/.otis/templates/tmpl.jade', defaultSidebar = true;</script><script src="doc-script.js"></script></head><body><div id="sidebar_wrapper"><div id="sidebar_switch"><span class="tree">Files</span><span class="headings">Headings</span></div><div id="tree"></div><div id="headings"></div></div><div id="sidebar-toggle"></div><div id="container"><div class="background highlight"></div><table cellpadding="0" cellspacing="0"><tbody><tr><td class="docs"><h1>SEStatelyNotificationRobot.h</h1></td><td class="code highlight"></td></tr><tr><td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+</td><td class="code highlight"><div class="highlight"><pre><span class="cp">//</span>
+<span class="cp">//  SEStatelyNotificationRobot.h</span>
+<span class="cp">//  SEStatelyNotificationRobot</span>
+<span class="cp">//</span>
+<span class="cp">//  Created by bryn austin bellomy on 7/8/12.</span>
+<span class="cp">//  Copyright (c) 2012 robot bubble bath LLC. All rights reserved.</span>
+<span class="cp">//</span>
+
+<span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+
+<span class="c1">// except for SEStateUndefined, these are just for users&#39; convenience -- feel</span>
+<span class="c1">// free to ignore/extend/redefine.</span>
+<span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+  <span class="n">SEStateUnstarted</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="n">SEStateInProgress</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">),</span>
+  <span class="n">SEStateFinished</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">SEStateNotActive</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">),</span>
+  <span class="n">SEStateUndefined</span> <span class="o">=</span> <span class="n">INT_MAX</span>
+<span class="p">}</span> <span class="n">SEState</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">SEStateHandlerBlock</span><span class="p">)(</span><span class="n">SEState</span> <span class="n">newState</span><span class="p">,</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">stateInfo</span><span class="p">);</span>
+
+
+
+<span class="k">@interface</span> <span class="nc">SEStatelyNotificationRobot</span> : <span class="nc">NSObject</span>
+
+<span class="cm">/* class methods */</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">SEStatelyNotificationRobot</span> <span class="o">*</span><span class="p">)</span> <span class="nf">sharedRobot</span><span class="p">;</span>
+
+
+<span class="cm">/* instance methods */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">handleStateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="nf">handlerID:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">identifier</span> <span class="nf">onQueue:</span><span class="p">(</span><span class="n">NSOperationQueue</span> <span class="o">*</span><span class="p">)</span><span class="nv">queue</span> <span class="nf">withBlock:</span><span class="p">(</span><span class="n">SEStateHandlerBlock</span><span class="p">)</span><span class="nv">block</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">removeHandlerWithID:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">handlerID</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">stopTrackingStateOf:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">stopTrackingAllStates</span><span class="p">;</span>
+  
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">changeStateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="nf">to:</span><span class="p">(</span><span class="n">SEState</span><span class="p">)</span><span class="nv">newState</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">changeStateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span> <span class="nf">to:</span><span class="p">(</span><span class="n">SEState</span><span class="p">)</span><span class="nv">newState</span> <span class="nf">stateInfo:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">stateInfo</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">SEState</span><span class="p">)</span> <span class="nf">stateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span> <span class="nf">stateInfoForStateOf:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">stativeThingName</span><span class="p">;</span>
+
+
+<span class="k">@end</span>
+</pre></div></td></tr></tbody></table></div></body></html>
