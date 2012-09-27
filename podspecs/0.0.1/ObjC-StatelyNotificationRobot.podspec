@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'WTFPL', :file => 'LICENSE.md' }
 
   s.author       = { "bryn austin bellomy" => "bryn.bellomy@gmail.com" }
-  s.source       = { :git => "git://github.com/brynbellomy/ObjC-StatelyNotificationRobot.git", :commit => "2cf5c15b35f6bd695f39fb5ae36c6c07856cb4f5" }
+  s.source       = { :git => "https://github.com/brynbellomy/ObjC-StatelyNotificationRobot.git", :commit => "2cf5c15b35f6bd695f39fb5ae36c6c07856cb4f5" }
   s.source_files = 'Classes/*.{h,m}'
 
   s.requires_arc = true
